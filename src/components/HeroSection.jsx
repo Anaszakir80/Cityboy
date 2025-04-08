@@ -8,17 +8,25 @@ const HeroSection = () => {
   // Preload the image
   useEffect(() => {
     const img = new Image();
-    img.src = "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80";
+    img.src = "/src/assets/IMG_9054 Medium.jpeg";
     img.onload = () => setImageLoaded(true);
+    
+    // Load custom font for CITYBOY
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+    
+    return () => {
+      if (link.parentNode) document.head.removeChild(link);
+    };
   }, []);
-
-  const letters = "CITYBOY".split("");
   
   return (
     <HeroContainer className="scroll-container">
       <ImageBackground $loaded={imageLoaded}>
         <img 
-          src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
+          src="/src/assets/IMG_9054 Medium.jpeg"
           alt="City Boy Background"
         />
       </ImageBackground>
@@ -28,30 +36,29 @@ const HeroSection = () => {
       <Overlay />
       
       <ContentContainer>
-        <LettersContainer>
-          {letters.map((letter, index) => (
-            <motion.span
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                duration: 0.6, 
-                delay: 0.3 + index * 0.1,
-                type: "spring",
-                stiffness: 100
-              }}
-            >
-              {letter}
-            </motion.span>
-          ))}
-        </LettersContainer>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ 
+            duration: 0.7,
+            delay: 0.3,
+            type: "spring",
+            stiffness: 300
+          }}
+        >
+          <ArtistName>
+            <BrandText>CITY BOY</BrandText>
+            <GlitchOverlay>CITY BOY</GlitchOverlay>
+            <GlitchOverlay $delay>CITY BOY</GlitchOverlay>
+          </ArtistName>
+        </motion.div>
         
         <motion.div
           initial={{ opacity: 0, y: 30, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ 
             duration: 0.8, 
-            delay: 1.2,
+            delay: 0.7,
             type: "spring"
           }}
         >
@@ -65,7 +72,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ 
             duration: 0.8, 
-            delay: 1.4,
+            delay: 0.9,
             type: "spring",
             stiffness: 100
           }}
@@ -75,14 +82,14 @@ const HeroSection = () => {
             <TitleUnderline 
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
-              transition={{ duration: 1, delay: 1.8 }}
+              transition={{ duration: 1, delay: 1.1 }}
             />
           </SingleTitleContainer>
         </motion.div>
         
         <ButtonGroup>
           {[
-            { icon: "fa-brands fa-spotify", text: "Spotify", bg: "#1DB954", link: "https://open.spotify.com/album/6ylI0fsk7lONrxj8hw5YwM?si=wTlqlrPETaqFE7tJNKKQ0A" },
+            { icon: "fa-brands fa-spotify", text: "Spotify", bg: "#1DB954", link: "https://open.spotify.com/artist/4RqKhdPXnN6cvyrwnP0USN?si=pM2i2NaNTD2MTDB1RTIxYQ" },
             { icon: "fa-brands fa-apple", text: "Apple Music", bg: "#FFFFFF", color: "#000", link: "https://music.apple.com/us/album/bonita/1798939049?i=179893905z" },
             { icon: "fa-brands fa-youtube", text: "YouTube", bg: "#FF0000", link: "https://www.youtube.com" }
           ].map((btn, index) => (
@@ -92,13 +99,15 @@ const HeroSection = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ 
                 duration: 0.6, 
-                delay: 1.8 + index * 0.2,
+                delay: 1.3 + index * 0.2,
                 type: "spring" 
               }}
             >
               <StreamButton 
                 href={btn.link} 
                 target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Listen on ${btn.text}`}
                 $bg={btn.bg}
                 $color={btn.color}
                 whileHover={{ 
@@ -113,14 +122,13 @@ const HeroSection = () => {
           ))}
         </ButtonGroup>
       </ContentContainer>
-      
-      
     </HeroContainer>
   );
 };
 
 const HeroContainer = styled.section`
   height: 100vh;
+  min-height: 500px;
   width: 100%;
   position: relative;
   display: flex;
@@ -128,6 +136,7 @@ const HeroContainer = styled.section`
   align-items: center;
   overflow: visible;
   background-color: transparent;
+  padding: 0 var(--space-md);
 `;
 
 const ImageBackground = styled.div`
@@ -137,7 +146,7 @@ const ImageBackground = styled.div`
   top: 0;
   left: 0;
   z-index: -1;
-  opacity: ${props => props.$loaded ? 0.5 : 0};
+  opacity: ${props => props.$loaded ? 0.8 : 0};
   transition: opacity 0.5s ease;
   
   img {
@@ -145,7 +154,7 @@ const ImageBackground = styled.div`
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: brightness(0.4) contrast(1.2) blur(1px);
+    filter: brightness(0.8) contrast(1.05);
   }
 `;
 
@@ -183,7 +192,7 @@ const Overlay = styled.div`
     height: 100%;
     background: radial-gradient(
       circle at center,
-      rgba(255, 0, 80, 0.08) 0%,
+      rgba(97, 72, 56, 0.12) 0%,
       transparent 70%
     );
     pointer-events: none;
@@ -195,35 +204,126 @@ const ContentContainer = styled.div`
   z-index: 2;
   padding: 0 1rem;
   margin-top: -5vh;
-`;
-
-const LettersContainer = styled.h1`
-  font-size: 6rem;
-  font-weight: 900;
-  letter-spacing: 6px;
-  margin-bottom: 1.5rem;
-  text-transform: uppercase;
-  display: flex;
-  justify-content: center;
-  perspective: 1000px;
-  
-  span {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(255, 0, 80, 0.5);
-    transform-style: preserve-3d;
-  }
+  width: 100%;
+  max-width: 600px;
   
   @media (max-width: 768px) {
-    font-size: 4rem;
-    letter-spacing: 4px;
+    margin-top: 0;
+    padding: 0 var(--space-sm);
+  }
+`;
+
+const ArtistName = styled.h1`
+  position: relative;
+  font-family: 'Teko', sans-serif;
+  font-size: 8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  margin-bottom: 1.5rem;
+  line-height: 1;
+  
+  @media (max-width: 768px) {
+    font-size: 5.5rem;
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
   }
   
   @media (max-width: 480px) {
-    font-size: 3rem;
+    font-size: 4rem;
     letter-spacing: 2px;
+  }
+  
+  @media (max-width: 350px) {
+    font-size: 3.5rem;
+  }
+`;
+
+const BrandText = styled.span`
+  display: block;
+  background: linear-gradient(135deg, #a67c52, #63493c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 3;
+  text-shadow: 0 0 20px rgba(97, 72, 56, 0.4);
+`;
+
+const GlitchOverlay = styled.span`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #a67c52, #63493c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ${props => props.$delay ? 'glitch-2 4s infinite' : 'glitch-1 5s infinite'};
+  text-shadow: 3px 3px 0 rgba(255,255,255,0.1);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  
+  @keyframes glitch-1 {
+    0% {
+      clip-path: polygon(0 0, 100% 0, 100% 10%, 0 35%);
+      transform: translate(-2px, 2px);
+      opacity: 0.8;
+    }
+    5% {
+      clip-path: polygon(0 30%, 100% 10%, 100% 60%, 0 40%);
+      transform: translate(2px, -2px);
+    }
+    10% {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      transform: translate(0);
+      opacity: 0.2;
+    }
+    15% {
+      clip-path: polygon(0 60%, 100% 30%, 100% 70%, 0 80%);
+      transform: translate(5px, 2px);
+      opacity: 0.6;
+    }
+    20% {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      transform: translate(0);
+      opacity: 0.2;
+    }
+    100% {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      transform: translate(0);
+      opacity: 0.2;
+    }
+  }
+  
+  @keyframes glitch-2 {
+    0% {
+      clip-path: polygon(0 45%, 100% 15%, 100% 35%, 0 75%);
+      transform: translate(-2px, -3px);
+      opacity: 0.6;
+    }
+    5% {
+      clip-path: polygon(0 65%, 100% 35%, 100% 85%, 0 95%);
+      transform: translate(3px, 1px);
+    }
+    10% {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      transform: translate(0);
+      opacity: 0.2;
+    }
+    15% {
+      clip-path: polygon(0 15%, 100% 5%, 100% 45%, 0 65%);
+      transform: translate(-5px, -2px);
+      opacity: 0.6;
+    }
+    20% {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      transform: translate(0);
+      opacity: 0.2;
+    }
+    100% {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      transform: translate(0);
+      opacity: 0.2;
+    }
   }
 `;
 
@@ -236,8 +336,14 @@ const Tagline = styled.h2`
   color: var(--text-secondary);
   
   @media (max-width: 768px) {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     letter-spacing: 2px;
+    margin-bottom: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
   }
 `;
 
@@ -260,7 +366,15 @@ const TaglineHighlight = styled.span`
 const SingleTitleContainer = styled.div`
   position: relative;
   display: inline-block;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const SingleTitle = styled.h3`
@@ -271,10 +385,16 @@ const SingleTitle = styled.h3`
   
   @media (max-width: 768px) {
     font-size: 2.5rem;
+    letter-spacing: 1px;
   }
   
   @media (max-width: 480px) {
     font-size: 2rem;
+    letter-spacing: 0.5px;
+  }
+  
+  @media (max-width: 350px) {
+    font-size: 1.8rem;
   }
 `;
 
@@ -291,10 +411,16 @@ const ButtonGroup = styled.div`
   justify-content: center;
   gap: 1.5rem;
   margin-top: 1.5rem;
+  flex-wrap: wrap;
   
   @media (max-width: 768px) {
-    flex-wrap: wrap;
     gap: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 0.75rem;
+    justify-content: space-around;
+    margin-top: 1rem;
   }
 `;
 
@@ -308,10 +434,11 @@ const StreamButton = styled(motion.a)`
   color: ${props => props.$color || 'white'};
   font-weight: 600;
   border-radius: 50px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  min-width: 150px;
   
   &:before {
     content: '';
@@ -340,9 +467,20 @@ const StreamButton = styled(motion.a)`
   @media (max-width: 768px) {
     padding: 0.8rem 1.5rem;
     font-size: 0.9rem;
+    min-width: 130px;
     
     i {
       font-size: 1.1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.8rem;
+    min-width: 110px;
+    
+    i {
+      font-size: 1rem;
     }
   }
 `;

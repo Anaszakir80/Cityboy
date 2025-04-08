@@ -13,25 +13,17 @@ const MusicPlayer = () => {
         id: 1,
         title: "Bonita",
         releaseDate: "2025",
-        cover: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+        cover: "/src/assets/IMG_9046 Medium.jpeg",
         spotifyUrl: "https://open.spotify.com/album/6ylI0fsk7lONrxj8hw5YwM?si=wTlqlrPETaqFE7tJNKKQ0A",
         appleUrl: "https://music.apple.com/us/album/bonita/1798939049?i=179893905z",
       },
       {
         id: 2,
-        title: "Summer Nights",
-        releaseDate: "2024",
-        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-        spotifyUrl: "#",
-        appleUrl: "#",
-      },
-      {
-        id: 3,
-        title: "City Lights",
-        releaseDate: "2024",
-        cover: "https://images.unsplash.com/photo-1515462277126-2dd0c162007a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-        spotifyUrl: "#",
-        appleUrl: "#",
+        title: "TRA",
+        releaseDate: "2025",
+        cover: "/src/assets/IMG_9050 Medium.jpeg",
+        spotifyUrl: "https://open.spotify.com/track/5CxTGH4n3InBnhGUjNGpty",
+        appleUrl: "https://music.apple.com/us/album/tra/1772751017?i=1772751019",
       }
     ],
     albums: [
@@ -39,7 +31,7 @@ const MusicPlayer = () => {
         id: 1,
         title: "Upcoming Album",
         releaseDate: "Coming Soon",
-        cover: "https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+        cover: "/src/assets/IMG_9045 Medium.jpeg",
         spotifyUrl: "#",
         appleUrl: "#",
       }
@@ -81,268 +73,273 @@ const MusicPlayer = () => {
   }, []);
 
   return (
-    <MusicContainer id="music">
-      <BackgroundGradient />
+    <MusicPlayerWrapper>
+      <MusicContainer id="music">
+        <SectionHeader>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <SectionTitle>Latest Music</SectionTitle>
+            <SectionSubtitle>Stream the latest singles and albums</SectionSubtitle>
+          </motion.div>
+        </SectionHeader>
       
-      <ContentWrapper>
-      <SectionHeader>
-          <motion.h2
+        <TabsContainer>
+          <TabsWrapper>
+            {['singles', 'albums'].map(tab => (
+              <Tab 
+                key={tab}
+                $active={activeTab === tab}
+                onClick={() => setActiveTab(tab)}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                {tab === 'singles' ? 'Singles' : 'Albums'}
+              </Tab>
+            ))}
+          </TabsWrapper>
+        </TabsContainer>
+      
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <ReleaseGrid>
+            {musicReleases[activeTab].map((release, index) => (
+              <ReleaseCard 
+                key={release.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -10 }}
+                onMouseEnter={() => setHoveredRelease(release.id)}
+                onMouseLeave={() => setHoveredRelease(null)}
+              >
+                <ReleaseImageContainer $hovered={hoveredRelease === release.id}>
+                  <ReleaseImage 
+                    src={release.cover} 
+                    alt={release.title} 
+                    $loaded={imagesLoaded[release.id]} 
+                  />
+                  {!imagesLoaded[release.id] && <ImagePlaceholder />}
+                  <OverlayButtons $visible={hoveredRelease === release.id}>
+                    <StreamButton href={release.spotifyUrl} target="_blank">
+                      <i className="fa-brands fa-spotify"></i>
+                    </StreamButton>
+                    <StreamButton href={release.appleUrl} target="_blank">
+                      <i className="fa-brands fa-apple"></i>
+                    </StreamButton>
+                  </OverlayButtons>
+                </ReleaseImageContainer>
+                <ReleaseInfo>
+                  <ReleaseTitle>{release.title}</ReleaseTitle>
+                  <ReleaseDate>{release.releaseDate}</ReleaseDate>
+                </ReleaseInfo>
+              </ReleaseCard>
+            ))}
+          </ReleaseGrid>
+        </motion.div>
+      
+        <SpotifyEmbedsSection>
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            Music
-          </motion.h2>
-          <motion.h3
+            <EmbedsTitle>Featured Tracks</EmbedsTitle>
+            <EmbedsGrid>
+              <EmbedWrapper>
+                <EmbedTitle>BONITA</EmbedTitle>
+                <SpotifyEmbed
+                  style={{ borderRadius: "12px" }}
+                  src="https://open.spotify.com/embed/track/4pGjEifPqxRp55cDIMf5Il?utm_source=generator&theme=0"
+                  width="100%"
+                  height="152"
+                  frameBorder="0"
+                  allowFullScreen=""
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                />
+              </EmbedWrapper>
+              <EmbedWrapper>
+                <EmbedTitle>TRA</EmbedTitle>
+                <SpotifyEmbed
+                  style={{ borderRadius: "12px" }}
+                  src="https://open.spotify.com/embed/track/5CxTGH4n3InBnhGUjNGpty?utm_source=generator&theme=0"
+                  width="100%"
+                  height="152"
+                  frameBorder="0"
+                  allowFullScreen=""
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                />
+              </EmbedWrapper>
+            </EmbedsGrid>
+          </motion.div>
+        </SpotifyEmbedsSection>
+      
+        <CTASection>
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            Stream & Listen
-          </motion.h3>
-      </SectionHeader>
-      
-      <TabContainer>
-        <Tab 
-          active={activeTab === 'singles'} 
-          onClick={() => setActiveTab('singles')}
-        >
-          Singles
-          {activeTab === 'singles' && <ActiveIndicator layoutId="tabIndicator" />}
-        </Tab>
-        <Tab 
-          active={activeTab === 'albums'} 
-          onClick={() => setActiveTab('albums')}
-        >
-          Albums
-          {activeTab === 'albums' && <ActiveIndicator layoutId="tabIndicator" />}
-        </Tab>
-      </TabContainer>
-      
-      <ReleaseGrid>
-          {musicReleases[activeTab].map((release, index) => (
-            <ReleaseCard 
-              key={release.id}
-            initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -10 }}
-              onMouseEnter={() => setHoveredRelease(release.id)}
-              onMouseLeave={() => setHoveredRelease(null)}
-            >
-              <ReleaseImageContainer $hovered={hoveredRelease === release.id}>
-                <ReleaseImage 
-                  src={release.cover} 
-                  alt={release.title} 
-                  $loaded={imagesLoaded[release.id]} 
-                />
-                {!imagesLoaded[release.id] && <ImagePlaceholder />}
-                <OverlayButtons $visible={hoveredRelease === release.id}>
-                <StreamButton href={release.spotifyUrl} target="_blank">
-                    <i className="fa-brands fa-spotify"></i>
-                </StreamButton>
-                <StreamButton href={release.appleUrl} target="_blank">
-                    <i className="fa-brands fa-apple"></i>
-                </StreamButton>
-              </OverlayButtons>
-            </ReleaseImageContainer>
-              <ReleaseInfo>
-            <ReleaseTitle>{release.title}</ReleaseTitle>
-            <ReleaseDate>{release.releaseDate}</ReleaseDate>
-              </ReleaseInfo>
-            </ReleaseCard>
-        ))}
-      </ReleaseGrid>
-      
-        <StreamingServices>
-          <StreamingSection>
-            <PlatformHeader>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
+            <CTATitle>Stream on All Platforms</CTATitle>
+            <CTAButtons>
+              <CTAButton 
+                href="https://open.spotify.com/artist/4RqKhdPXnN6cvyrwnP0USN" 
+                target="_blank"
+                $bgColor="#1DB954"
+                whileHover={{ y: -5, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <PlatformIcon className="spotify">
-                  <i className="fa-brands fa-spotify"></i>
-                </PlatformIcon>
-                <PlatformTitle>Listen on Spotify</PlatformTitle>
-              </motion.div>
-            </PlatformHeader>
-            
-            <PlatformContent>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                viewport={{ once: true }}
+                <i className="fa-brands fa-spotify"></i>
+                <span>Spotify</span>
+              </CTAButton>
+              <CTAButton 
+                href="https://music.apple.com/us/artist/city-boy/1771747739" 
+                target="_blank"
+                $bgColor="#FC3C44"
+                whileHover={{ y: -5, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <EmbedWrapper className="spotify">
-        <iframe 
-          src="https://open.spotify.com/embed/album/6ylI0fsk7lONrxj8hw5YwM" 
-          width="100%" 
-                    height="352" 
-          frameBorder="0" 
-          allowtransparency="true" 
-          allow="encrypted-media"
-        />
-                </EmbedWrapper>
-                
-                <PlatformButton
-                  href="https://open.spotify.com/album/6ylI0fsk7lONrxj8hw5YwM?si=wTlqlrPETaqFE7tJNKKQ0A"
-                  target="_blank"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Open in Spotify <i className="fa-solid fa-arrow-up-right-from-square"></i>
-                </PlatformButton>
-              </motion.div>
-            </PlatformContent>
-          </StreamingSection>
-          
-          <StreamingSection>
-            <PlatformHeader>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
+                <i className="fa-brands fa-apple"></i>
+                <span>Apple Music</span>
+              </CTAButton>
+              <CTAButton 
+                href="https://www.youtube.com/@cityboywaves" 
+                target="_blank"
+                $bgColor="#FF0000"
+                whileHover={{ y: -5, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <PlatformIcon className="apple">
-                  <i className="fa-brands fa-apple"></i>
-                </PlatformIcon>
-                <PlatformTitle>Listen on Apple Music</PlatformTitle>
-              </motion.div>
-            </PlatformHeader>
-            
-            <PlatformContent>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                <EmbedWrapper className="apple">
-        <iframe 
-          allow="autoplay *; encrypted-media *; fullscreen *" 
-          frameBorder="0" 
-          height="450" 
-          width="100%" 
-                    style={{ background: 'transparent', maxWidth: '660px', overflow: 'hidden' }}
-          sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" 
-                    src="https://embed.music.apple.com/us/album/bonita-single/1798939049"
-                  />
-                </EmbedWrapper>
-                
-                <PlatformButton
-                  href="https://music.apple.com/us/album/bonita/1798939049?i=179893905z"
-                  target="_blank"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Open in Apple Music <i className="fa-solid fa-arrow-up-right-from-square"></i>
-                </PlatformButton>
-              </motion.div>
-            </PlatformContent>
-          </StreamingSection>
-        </StreamingServices>
-      </ContentWrapper>
-    </MusicContainer>
+                <i className="fa-brands fa-youtube"></i>
+                <span>YouTube</span>
+              </CTAButton>
+            </CTAButtons>
+          </motion.div>
+        </CTASection>
+      </MusicContainer>
+    </MusicPlayerWrapper>
   );
 };
 
-const MusicContainer = styled.section`
+const MusicPlayerWrapper = styled.section`
+  width: 100%;
+  background-color: transparent;
   position: relative;
   padding: 5rem 0;
-  background-color: transparent;
-  overflow: hidden;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("/src/assets/IMG_9044 Medium.jpeg") no-repeat center center;
+    background-size: cover;
+    opacity: 0.08;
+    z-index: 0;
+  }
 `;
 
-const BackgroundGradient = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
+const MusicContainer = styled.div`
   width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 10% 30%, rgba(29, 185, 84, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 90% 70%, rgba(255, 0, 80, 0.1) 0%, transparent 50%);
-  z-index: 0;
-`;
-
-const ContentWrapper = styled.div`
-  position: relative;
-  z-index: 1;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
+  position: relative;
+  z-index: 1;
   
   @media (max-width: 768px) {
-    padding: 0 1.5rem;
+    padding: 0 1rem;
   }
 `;
 
 const SectionHeader = styled.div`
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   
-  h2 {
-    font-size: 3.5rem;
-    font-weight: 900;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 1px;
-  }
-  
-  h3 {
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 3px;
+  @media (max-width: 480px) {
+    margin-bottom: 2.5rem;
   }
 `;
 
-const TabContainer = styled.div`
+const SectionTitle = styled.h2`
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+`;
+
+const SectionSubtitle = styled.p`
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+`;
+
+const TabsContainer = styled.div`
   display: flex;
   justify-content: center;
-  gap: 3rem;
   margin-bottom: 3rem;
-  position: relative;
 `;
 
-const Tab = styled.button`
-  padding: 0.6rem 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-  background: transparent;
-  color: ${props => props.active ? 'var(--secondary-color)' : 'var(--text-secondary)'};
+const TabsWrapper = styled.div`
+  display: flex;
+  background: rgba(30, 30, 30, 0.3);
+  border-radius: 50px;
+  padding: 0.5rem;
+  gap: 0.5rem;
+`;
+
+const Tab = styled(motion.button)`
+  padding: 0.8rem 2rem;
   border: none;
+  border-radius: 50px;
+  background: ${props => props.$active ? 'var(--secondary-color)' : 'transparent'};
+  color: ${props => props.$active ? '#fff' : 'var(--text-secondary)'};
+  font-weight: ${props => props.$active ? '600' : '500'};
+  font-size: 1rem;
   cursor: pointer;
-  position: relative;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
   
-  &:hover {
-    color: var(--secondary-color);
+  @media (max-width: 480px) {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
   }
-`;
-
-const ActiveIndicator = styled(motion.div)`
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
-  border-radius: 3px;
+  
+  @media (max-width: 320px) {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.8rem;
+  }
 `;
 
 const ReleaseGrid = styled.div`
@@ -355,13 +352,19 @@ const ReleaseGrid = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1.5rem;
   }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
 `;
 
 const ReleaseCard = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  background: rgba(30, 30, 30, 0.3);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -387,6 +390,7 @@ const ReleaseImage = styled.img`
   object-fit: cover;
   transition: transform 0.4s ease;
   opacity: ${props => props.$loaded ? 1 : 0};
+  filter: contrast(1.05);
 `;
 
 const ImagePlaceholder = styled.div`
@@ -433,192 +437,216 @@ const OverlayButtons = styled.div`
 `;
 
 const StreamButton = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.95);
-  font-size: 1.5rem;
-  transform: translateY(${props => props.$visible ? '0' : '10px'});
+  background: rgba(166, 124, 82, 0.8);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
   transition: all 0.3s ease;
   
   &:hover {
     transform: scale(1.1);
+    background: var(--secondary-color);
   }
   
-  &:first-child {
-    color: #1DB954;
-    box-shadow: 0 5px 15px rgba(29, 185, 84, 0.3);
-  }
-  
-  &:nth-child(2) {
-    color: #FC3C44;
-    box-shadow: 0 5px 15px rgba(252, 60, 68, 0.3);
+  @media (max-width: 480px) {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
   }
 `;
 
 const ReleaseInfo = styled.div`
   padding: 1.2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
+  text-align: center;
+  
+  @media (max-width: 480px) {
+    padding: 0.8rem;
+  }
 `;
 
-const ReleaseTitle = styled.h4`
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 0.4rem;
-  text-align: center;
+const ReleaseTitle = styled.h3`
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
 `;
 
 const ReleaseDate = styled.p`
   font-size: 0.9rem;
   color: var(--text-secondary);
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
+`;
+
+const CTASection = styled.div`
   text-align: center;
-`;
-
-const StreamingServices = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  padding: 2rem 0;
+  background: rgba(30, 30, 30, 0.3);
+  border-radius: 8px;
+  margin-top: 3rem;
   
-  @media (max-width: 992px) {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+  @media (max-width: 480px) {
+    padding: 1.5rem 0;
+    margin-top: 2rem;
   }
 `;
 
-const StreamingSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 16px;
-  padding: 2.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-  }
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, 
-      var(--secondary-color) 0%, 
-      var(--accent-color) 100%
-    );
-  }
-`;
-
-const PlatformHeader = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 2.5rem;
-  width: 100%;
-  
-  > div {
-    display: flex;
-    align-items: center;
-  }
-`;
-
-const PlatformIcon = styled.div`
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 1.2rem;
-  font-size: 2rem;
-  
-  &.spotify {
-    color: #1DB954;
-    background: rgba(29, 185, 84, 0.1);
-    box-shadow: 0 5px 15px rgba(29, 185, 84, 0.2);
-  }
-  
-  &.apple {
-    color: #FC3C44;
-    background: rgba(252, 60, 68, 0.1);
-    box-shadow: 0 5px 15px rgba(252, 60, 68, 0.2);
-  }
-`;
-
-const PlatformTitle = styled.h3`
+const CTATitle = styled.h3`
   font-size: 1.8rem;
   font-weight: 700;
-  margin: 0;
+  margin-bottom: 2rem;
+  
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
 `;
 
-const PlatformContent = styled.div`
-  width: 100%;
+const CTAButtons = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+`;
+
+const CTAButton = styled(motion.a)`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 2rem;
+  background-color: ${props => props.$bgColor || 'var(--secondary-color)'};
+  color: white;
+  font-weight: 600;
+  border-radius: 50px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  
+  i {
+    font-size: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.8rem 1.5rem;
+    margin-bottom: 0.5rem;
+    
+    i {
+      font-size: 1.3rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    width: 80%;
+    justify-content: center;
+    padding: 0.8rem 1rem;
+    
+    i {
+      font-size: 1.2rem;
+    }
+  }
+`;
+
+const SpotifyEmbedsSection = styled.div`
+  margin: 5rem 0 3rem 0;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    margin: 3rem 0 2rem 0;
+  }
+`;
+
+const EmbedsTitle = styled.h3`
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+`;
+
+const EmbedsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1rem;
+  }
 `;
 
 const EmbedWrapper = styled.div`
-  margin-bottom: 1.5rem;
-  width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  background: #121212;
+  padding: 1.5rem;
+  background: rgba(20, 20, 20, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   
-  &.spotify {
-    border: 1px solid rgba(29, 185, 84, 0.2);
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
   }
   
-  &.apple {
-    border: 1px solid rgba(252, 60, 68, 0.2);
-  }
-  
-  iframe {
-    display: block;
+  @media (max-width: 480px) {
+    padding: 1rem;
     border-radius: 12px;
   }
 `;
 
-const PlatformButton = styled(motion.a)`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.9rem 1.8rem;
-  background: transparent;
-  border: 2px solid var(--secondary-color);
-  color: var(--secondary-color);
-    font-weight: 600;
-  font-size: 1rem;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+const EmbedTitle = styled.h4`
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
   
-  i {
-    font-size: 0.9rem;
-    transition: transform 0.3s ease;
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
   }
-  
-  &:hover {
-    background: var(--secondary-color);
-    color: black;
-    box-shadow: 0 8px 20px rgba(255, 0, 80, 0.25);
-    
-    i {
-      transform: translate(3px, -3px);
-    }
-  }
+`;
+
+const SpotifyEmbed = styled.iframe`
+  width: 100%;
+  border: none;
+  max-width: 500px;
+  margin: 0 auto;
+  display: block;
 `;
 
 export default MusicPlayer; 

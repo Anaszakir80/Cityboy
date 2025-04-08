@@ -34,7 +34,6 @@ const Navbar = () => {
         </MobileMenuButton>
 
         <DesktopMenu>
-          <NavLink to="/">Home</NavLink>
           <NavLink to="/music">Music</NavLink>
           <NavLink to="/videos">Videos</NavLink>
           <NavLink to="/about">About</NavLink>
@@ -65,7 +64,6 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <MobileNavLink to="/" onClick={() => setIsOpen(false)}>Home</MobileNavLink>
             <MobileNavLink to="/music" onClick={() => setIsOpen(false)}>Music</MobileNavLink>
             <MobileNavLink to="/videos" onClick={() => setIsOpen(false)}>Videos</MobileNavLink>
             <MobileNavLink to="/about" onClick={() => setIsOpen(false)}>About</MobileNavLink>

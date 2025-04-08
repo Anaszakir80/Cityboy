@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage.jsx';
+import ContactPage from './pages/ContactPage.jsx';
+import TermsPage from './pages/TermsPage.jsx';
+import PrivacyPage from './pages/PrivacyPage.jsx';
 import { useEffect, useState } from 'react';
 import SmoothScroll from './components/LocomotiveScroll';
 import ScrollObserver from './components/ScrollObserver';
@@ -38,23 +41,19 @@ function App() {
 
   return (
     <>
-      <ParticlesBackground>
-        {Array.from({ length: 150 }).map((_, i) => (
-          <Particle key={i} />
-        ))}
-      </ParticlesBackground>
-      
       <SmoothScroll>
         <ScrollObserver />
         <Router>
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<HomePage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/terms" element={<TermsPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
               {/* Future routes will go here */}
               {/* <Route path="/music" element={<MusicPage />} /> */}
               {/* <Route path="/videos" element={<VideosPage />} /> */}
               {/* <Route path="/about" element={<AboutPage />} /> */}
-              {/* <Route path="/contact" element={<ContactPage />} /> */}
               <Route path="*" element={<HomePage />} />
             </Route>
           </Routes>
@@ -63,47 +62,5 @@ function App() {
     </>
   );
 }
-
-const ParticlesBackground = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-`;
-
-const Particle = styled.div`
-  position: absolute;
-  width: ${() => Math.random() * 3 + 1}px;
-  height: ${() => Math.random() * 3 + 1}px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  top: ${() => Math.random() * 100}vh;
-  left: ${() => Math.random() * 100}vw;
-  animation: particleFloat ${() => 20 + Math.random() * 40}s linear infinite;
-  opacity: ${() => 0.2 + Math.random() * 0.6};
-  box-shadow: 0 0 ${() => 3 + Math.random() * 5}px rgba(255, 255, 255, 0.7);
-  
-  @keyframes particleFloat {
-    0% {
-      transform: translateY(0) translateX(0);
-    }
-    25% {
-      transform: translateY(-${() => Math.random() * 100 + 50}px) translateX(${() => Math.random() * 100 - 50}px);
-    }
-    50% {
-      transform: translateY(-${() => Math.random() * 150 + 100}px) translateX(0);
-    }
-    75% {
-      transform: translateY(-${() => Math.random() * 100 + 50}px) translateX(-${() => Math.random() * 100 - 50}px);
-    }
-    100% {
-      transform: translateY(0) translateX(0);
-    }
-  }
-`;
 
 export default App;

@@ -7,16 +7,9 @@ const AboutSection = () => {
   
   useEffect(() => {
     const img = new Image();
-    img.src = "https://images.unsplash.com/photo-1516223725307-6f76b9ec8742?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80";
+    img.src = "/src/assets/IMG_9036 Medium.jpeg";
     img.onload = () => setImageLoaded(true);
   }, []);
-
-  const stats = [
-    { number: '500K+', label: 'Monthly Listeners', icon: 'fa-brands fa-spotify' },
-    { number: '50M+', label: 'Total Streams', icon: 'fa-solid fa-headphones' },
-    { number: '120+', label: 'Live Shows', icon: 'fa-solid fa-microphone' },
-    { number: '25+', label: 'Countries', icon: 'fa-solid fa-earth-americas' }
-  ];
 
   return (
     <AboutSectionWrapper>
@@ -45,7 +38,7 @@ const AboutSection = () => {
                 <ArtistImageContainer>
                   <ArtistImageWrapper $loaded={imageLoaded}>
                     <img
-                      src="https://images.unsplash.com/photo-1516223725307-6f76b9ec8742?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+                      src="/src/assets/IMG_9036 Medium.jpeg"
                       alt="City Boy"
                     />
                   </ArtistImageWrapper>
@@ -53,34 +46,6 @@ const AboutSection = () => {
                   <ImageOverlay />
                 </ArtistImageContainer>
               </motion.div>
-              
-              <SocialLinksBar>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  <SocialLinkText>Follow on Social Media</SocialLinkText>
-                  <SocialIconsWrapper>
-                    <SocialIcon href="https://instagram.com" target="_blank" $color="#E1306C">
-                      <i className="fa-brands fa-instagram"></i>
-                    </SocialIcon>
-                    <SocialIcon href="https://twitter.com" target="_blank" $color="#1DA1F2">
-                      <i className="fa-brands fa-x-twitter"></i>
-                    </SocialIcon>
-                    <SocialIcon href="https://spotify.com" target="_blank" $color="#1DB954">
-                      <i className="fa-brands fa-spotify"></i>
-                    </SocialIcon>
-                    <SocialIcon href="https://youtube.com" target="_blank" $color="#FF0000">
-                      <i className="fa-brands fa-youtube"></i>
-                    </SocialIcon>
-                    <SocialIcon href="https://tiktok.com" target="_blank" $color="#000000">
-                      <i className="fa-brands fa-tiktok"></i>
-                    </SocialIcon>
-                  </SocialIconsWrapper>
-                </motion.div>
-              </SocialLinksBar>
             </ImageAndSocial>
             
             <TextContent>
@@ -90,7 +55,7 @@ const AboutSection = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <ArtistNameLarge>CITY BOY</ArtistNameLarge>
+                <ArtistNameLarge className="brand-font">CITY BOY</ArtistNameLarge>
               </motion.div>
               
               <motion.div
@@ -110,10 +75,10 @@ const AboutSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
                 viewport={{ once: true }}
-        >
-          <BioParagraph>
-                  City Boy is an emerging artist bringing fresh energy to the music scene. With a unique blend of urban sounds and contemporary beats, City Boy is making waves in the industry. His latest single "BONITA" has been making waves across streaming platforms.
-          </BioParagraph>
+              >
+                <BioParagraph>
+                  City Boy is an emerging artist captivating audiences with his authentic voice and dynamic presence. Born from genuine experiences and a passion for self-expression, his creative journey reflects the pulse of urban life and the diverse influences that shape modern culture. His latest single "BONITA" has been making waves across streaming platforms.
+                </BioParagraph>
               </motion.div>
               
               <motion.div
@@ -122,91 +87,48 @@ const AboutSection = () => {
                 transition={{ duration: 0.6, delay: 0.6 }}
                 viewport={{ once: true }}
               >
-          <BioParagraph>
+                <BioParagraph>
                   Drawing inspiration from urban culture and modern life, City Boy's music resonates with a global audience. His distinctive style and authentic approach to music have earned him a growing fanbase worldwide.
-          </BioParagraph>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                viewport={{ once: true }}
-              >
-                <ReadMoreButton 
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Read Full Biography <i className="fa-solid fa-arrow-right"></i>
-                </ReadMoreButton>
+                </BioParagraph>
               </motion.div>
             </TextContent>
           </BioPart>
           
-          <StatsContainer>
+          <InstagramBannerSection>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
               viewport={{ once: true }}
             >
-              <StatsWrapper>
-                {stats.map((stat, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 + (index * 0.1) }}
-                    viewport={{ once: true }}
-                  >
-                    <StatCard>
-                      <StatIconCircle>
-                        <i className={stat.icon}></i>
-                      </StatIconCircle>
-                      <StatContent>
-                        <StatNumber>{stat.number}</StatNumber>
-                        <StatLabel>{stat.label}</StatLabel>
-                      </StatContent>
-                    </StatCard>
-                  </motion.div>
-                ))}
-              </StatsWrapper>
+              <InstagramBannerContainer>
+                <InstagramBannerInner>
+                  <InstagramBannerContent>
+                    <InstagramBannerIcon>
+                      <i className="fa-brands fa-instagram"></i>
+                    </InstagramBannerIcon>
+                    <InstagramBannerText>
+                      <InstagramBannerTitle>Follow on Instagram</InstagramBannerTitle>
+                      <InstagramBannerDescription>
+                        Stay updated with the latest releases, behind-the-scenes content and more
+                      </InstagramBannerDescription>
+                    </InstagramBannerText>
+                  </InstagramBannerContent>
+                  <InstagramBannerActions>
+                    <InstagramButton 
+                      href="https://instagram.com/whatupcityboy" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <i className="fa-brands fa-instagram"></i> @whatupcityboy
+                    </InstagramButton>
+                  </InstagramBannerActions>
+                </InstagramBannerInner>
+              </InstagramBannerContainer>
             </motion.div>
-          </StatsContainer>
-          
-          <HighlightsSection>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <HighlightsTitle>Career Highlights</HighlightsTitle>
-              <HighlightsGrid>
-                <HighlightCard>
-                  <HighlightIcon>🏆</HighlightIcon>
-                  <HighlightContent>
-                    <HighlightTitle>Best New Artist</HighlightTitle>
-                    <HighlightText>Awarded "Best New Artist" at the 2023 Music Awards</HighlightText>
-                  </HighlightContent>
-                </HighlightCard>
-                <HighlightCard>
-                  <HighlightIcon>🎵</HighlightIcon>
-                  <HighlightContent>
-                    <HighlightTitle>Chart Topper</HighlightTitle>
-                    <HighlightText>#1 on Billboard Top 100 for 3 consecutive weeks</HighlightText>
-                  </HighlightContent>
-                </HighlightCard>
-                <HighlightCard>
-                  <HighlightIcon>🎤</HighlightIcon>
-                  <HighlightContent>
-                    <HighlightTitle>Sold Out Tour</HighlightTitle>
-                    <HighlightText>Completely sold out nationwide tour in 2022</HighlightText>
-                  </HighlightContent>
-                </HighlightCard>
-              </HighlightsGrid>
-            </motion.div>
-          </HighlightsSection>
+          </InstagramBannerSection>
         </ContentLayout>
     </AboutContainer>
     </AboutSectionWrapper>
@@ -226,9 +148,9 @@ const AboutSectionWrapper = styled.section`
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80") no-repeat center center;
+    background: url("/src/assets/IMG_9060 Medium.jpeg") no-repeat center center;
     background-size: cover;
-    opacity: 0.05;
+    opacity: 0.08;
     z-index: 0;
   }
 `;
@@ -300,12 +222,12 @@ const ArtistImageContainer = styled.div`
   position: relative;
   width: 100%;
   aspect-ratio: 1;
-  border-radius: 16px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
   
   &:hover img {
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
 `;
 
@@ -324,6 +246,7 @@ const ArtistImageWrapper = styled.div`
     object-fit: cover;
     object-position: top center;
     transition: all 0.5s ease;
+    filter: brightness(1.1) contrast(1.05);
   }
 `;
 
@@ -361,50 +284,7 @@ const ImageOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 40%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
-`;
-
-const SocialLinksBar = styled.div`
-  width: 100%;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
-`;
-
-const SocialLinkText = styled.p`
-  font-size: 1rem;
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
-`;
-
-const SocialIconsWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  
-  @media (max-width: 480px) {
-    flex-wrap: wrap;
-  }
-`;
-
-const SocialIcon = styled.a`
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${props => props.$color || 'white'};
-  font-size: 1.4rem;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  }
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
 `;
 
 const TextContent = styled.div`
@@ -419,10 +299,55 @@ const ArtistNameLarge = styled.h3`
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 4px;
-  background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 30px rgba(255, 0, 80, 0.2);
+  position: relative;
+  margin: 0 0 10px 0;
+  display: inline-block;
+  color: transparent;
+  
+  /* Base text */
+  &::before {
+    content: "CITY BOY";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(166, 124, 82, 0.1);
+  }
+  
+  /* Shimmer layer */
+  &::after {
+    content: "CITY BOY";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s infinite linear;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -100% 0;
+    }
+    100% {
+      background-position: 100% 0;
+    }
+  }
   
   @media (max-width: 768px) {
     font-size: 2.8rem;
@@ -481,126 +406,105 @@ const ReadMoreButton = styled(motion.button)`
   }
 `;
 
-const StatsContainer = styled.div`
+const InstagramBannerSection = styled.div`
+  margin-top: 4rem;
   width: 100%;
 `;
 
-const StatsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+const InstagramBannerContainer = styled.div`
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+`;
+
+const InstagramBannerInner = styled.div`
+  background: rgba(20, 20, 20, 0.95);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   
-  @media (max-width: 992px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.2rem;
   }
 `;
 
-const StatCard = styled.div`
+const InstagramBannerContent = styled.div`
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.08);
-  }
+  gap: 1.2rem;
 `;
 
-const StatIconCircle = styled.div`
-  width: 60px;
-  height: 60px;
+const InstagramBannerIcon = styled.div`
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: rgba(29, 185, 84, 0.1);
+  background: linear-gradient(135deg, #E1306C, #833AB4);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--secondary-color);
-  font-size: 1.8rem;
+  color: white;
+  font-size: 1.4rem;
+  flex-shrink: 0;
 `;
 
-const StatContent = styled.div`
-  flex: 1;
+const InstagramBannerText = styled.div`
+  text-align: left;
 `;
 
-const StatNumber = styled.div`
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--secondary-color);
-  margin-bottom: 0.3rem;
-`;
-
-const StatLabel = styled.div`
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-`;
-
-const HighlightsSection = styled.div`
-  width: 100%;
-`;
-
-const HighlightsTitle = styled.h3`
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  text-align: center;
-`;
-
-const HighlightsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  
-  @media (max-width: 992px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  @media (max-width: 576px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const HighlightCard = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.05);
-  }
-`;
-
-const HighlightIcon = styled.div`
-  font-size: 2.5rem;
-`;
-
-const HighlightContent = styled.div`
-  flex: 1;
-`;
-
-const HighlightTitle = styled.h4`
+const InstagramBannerTitle = styled.h3`
   font-size: 1.2rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
+  color: white;
 `;
 
-const HighlightText = styled.p`
-  font-size: 0.9rem;
-  color: var(--text-secondary);
+const InstagramBannerDescription = styled.p`
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 300px;
+  line-height: 1.4;
+`;
+
+const InstagramBannerActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
+`;
+
+const InstagramButton = styled(motion.a)`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, #E1306C, #833AB4);
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  
+  i {
+    font-size: 1.1rem;
+  }
+  
+  @media (max-width: 480px) {
+    width: 100%;
+    justify-content: center;
+    padding: 0.8rem 1rem;
+  }
 `;
 
 export default AboutSection; 

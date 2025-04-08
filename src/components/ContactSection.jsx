@@ -432,8 +432,8 @@ const InfoCard = styled(Card)`
   padding: 3rem;
   background: linear-gradient(
     135deg,
-    rgba(0, 0, 0, 0.4),
-    rgba(20, 20, 20, 0.6)
+    rgba(0, 0, 0, 0.3),
+    rgba(20, 20, 20, 0.5)
   );
   display: flex;
   flex-direction: column;
@@ -447,8 +447,8 @@ const FormCard = styled(Card)`
   padding: 3rem;
   background: linear-gradient(
     135deg,
-    rgba(0, 0, 0, 0.4),
-    rgba(20, 20, 20, 0.6)
+    rgba(0, 0, 0, 0.3),
+    rgba(20, 20, 20, 0.5)
   );
   
   @media (max-width: 768px) {
